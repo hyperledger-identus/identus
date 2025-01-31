@@ -22,10 +22,6 @@ services:
       NODE_REFRESH_AND_SUBMIT_PERIOD:
       NODE_MOVE_SCHEDULED_TO_PENDING_PERIOD:
       NODE_WALLET_MAX_TPS:
-        # NODE_PSQL_USERNAME: postgres
-        # NODE_PSQL_HOST: database-prism-node.cluster-cv1pad4ulozd.eu-central-1.rds.amazonaws.com:5432
-        # NODE_PSQL_PASSWORD: Gu3sa7hJEIu4URQSZcH4
-        # NODE_PSQL_DATABASE: postgres
     depends_on:
       db:
         condition: service_healthy
