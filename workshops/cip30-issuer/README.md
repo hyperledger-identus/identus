@@ -14,19 +14,20 @@ This is a [Next.js](https://nextjs.org/) demonstration of the Identus typescript
 - Node.js LTS
 - Optional: [Blockfrost  API key](https://blockfrost.io/)
 
-### Configuration
+### Blockfrost configuration
 
-1. Optionally (if you want to issue dids using [cip-30](https://cips.cardano.org/cip/CIP-30)) Create a `.env.local` file and add your Blockfrost API key:
+1. Create a `.env.local` file and add your Blockfrost API key:
 
 ```bash
 NEXT_PUBLIC_BLOCKFROST_API_KEY=<your-blockfrost-api-key>
 ```
 
-First, run the development server:
+### Running the application
+Run the development server:
 
 ```bash
 npm i 
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see workshop.
