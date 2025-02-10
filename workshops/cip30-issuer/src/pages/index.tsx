@@ -120,7 +120,7 @@ const Agent: React.FC = () => {
         },
         "1000000"
       )
-      .setMetadata(21325, metadataBody)
+      .setMetadata(21325, metadataBody);
 
     // Build and sign
     const unsignedTx = await tx.build();
