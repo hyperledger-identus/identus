@@ -77,11 +77,13 @@ const Agent: React.FC = () => {
   /**
    * Chunk a large string into smaller parts (used for storing DID data in metadata).
    */
-  function splitStringIntoChunks(input: string, chunkSize = 64): string[] {
-    const buffer = Buffer.from(input, "utf-8");
-    const chunks: string[] = [];
+  function splitStringIntoChunks(input: Uint8Array, chunkSize = 64): Uint8Array[] {
+    const buffer = Buffer.from(input);
+    const chunks: Uint8Array[] = [];
     for (let i = 0; i < buffer.length; i += chunkSize) {
-      chunks.push(buffer.slice(i, i + chunkSize).toString("utf-8"));
+      chunks.push(
+       Uint8Array.from(buffer.slice(i, i + chunkSize))
+      );
     }
     return chunks;
   }
@@ -110,7 +112,6 @@ const Agent: React.FC = () => {
    */
   async function buildAndSubmitTransaction(metadataBody: any): Promise<string> {
     if (!wallet) throw new Error("No wallet connected");
-
     // Create a new transaction with the "initiator" set to the connected wallet
     const tx = new Transaction({ initiator: wallet })
       .sendLovelace(
@@ -119,7 +120,7 @@ const Agent: React.FC = () => {
         },
         "1000000"
       )
-      .setMetadata(21325, metadataBody);
+      .setMetadata(21325, metadataBody)
 
     // Build and sign
     const unsignedTx = await tx.build();
@@ -158,12 +159,11 @@ const Agent: React.FC = () => {
         masterKey,
         SDK.Domain.DID.fromString(did)
       );
-      const atalaObjectHex = Buffer.from(atalaObject).toString("hex");
 
       // 3) Break that object into chunks for metadata
       const metadataBody = {
         v: 1,
-        c: splitStringIntoChunks(atalaObjectHex),
+        c: splitStringIntoChunks(atalaObject),
       };
 
       setPublishStatus({
