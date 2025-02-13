@@ -33,7 +33,6 @@ services:
       - "8085:8085" # API endpoint
       - "8090:8090" # DIDComm endpoint
     environment:
-      JAVA_OPTS: "-XX:UseSVE=0"
       POLLUX_DB_HOST: db
       POLLUX_DB_PORT: 5432
       POLLUX_DB_NAME: pollux
