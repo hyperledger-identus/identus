@@ -6,8 +6,8 @@ Identus provides components to develop decentralized identity solutions that adh
 
 To quickly get up and running and explore the project's capabilities:
 - Follow the instructions in 💻 [dockerize-identus.md](identus-docker/dockerize-identus.md) to have a local environment up and running.
-- Try the ⚡[Quick Start Guide](https://hyperledger.github.io/identus-docs/docs/quick-start/) to explore the capabilities of Identus step by step.
-- Find more details about any topic you need by reading the project's 📄 [Documentation](https://hyperledger.github.io/identus-docs/).
+- Try the ⚡[Quick Start Guide](https://hyperledger-identus.github.io/docs/home/quick-start/) to explore the capabilities of Identus step by step.
+- Find more details about any topic you need by reading the project's 📄 [Documentation](https://hyperledger-identus.github.io/docs/).
 
 ## Project Roadmap 
 
