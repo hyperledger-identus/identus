@@ -1,6 +1,21 @@
 # Cardano Mainnet
 
-//TODO
+## Cardano Node with Mithril Snapshot
 
-1. add docker-compose.yml to the root directory
-2. add mainnet configuration for the Cardano stack
+### Prerequisites
+- docker
+- docker compose
+- git
+- GITHUB_TOKEN to authenticate to ghcr.io
+```shell
+docker login ghcr.io -u <username> -p <token>
+```
+### Purpose
+
+Fast setup of the Cardano Node docker image with the Mithril snapshot
+
+### Usage
+
+```shell
+./start-cardano-node-with-mithril.sh
+```

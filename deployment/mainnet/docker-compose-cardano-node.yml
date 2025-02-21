@@ -1,0 +1,33 @@
+services:
+  init-node:
+    image: ghcr.io/input-output-hk/mithril-client:latest
+    entrypoint: /app/bin/entrypoint.sh
+    user: "${UID}:${GID}"
+    environment:
+      NETWORK: $NETWORK
+      UNPACK_DIR: /data
+    volumes:
+      - ./mithril-entrypoint.sh:/app/bin/entrypoint.sh
+      - node-db:/data
+    deploy:
+      resources:
+        limits:
+          cpus: "8"
+          memory: "8GB"
+        reservations:
+          cpus: "1"
+          memory: "2GB"
+  cardano-node:
+    image: ghcr.io/intersectmbo/cardano-node:10.1.4
+    environment:
+      - NETWORK=$NETWORK
+    volumes:
+      - node-db:/data
+      - node-ipc:/ipc
+    restart: on-failure
+    depends_on:
+      init-node:
+        condition: service_completed_successfully
+volumes:
+  node-db:
+  node-ipc:
