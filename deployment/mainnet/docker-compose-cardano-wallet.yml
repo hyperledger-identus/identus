@@ -1,0 +1,23 @@
+version: "3.5"
+
+services:
+
+  cardano-wallet:
+    image: cardanofoundation/cardano-wallet:2025.1.9
+    command: |
+      serve
+      --listen-address 0.0.0.0
+      --node-socket /node-ipc/node.socket
+      --mainnet 
+      --database /wallet-db
+    volumes:
+      - node-config:/configs
+      - node-ipc:/node-ipc
+      - wallet-db:/wallet-db
+    ports:
+      - "8090:8090"
+
+volumes:
+  node-config:
+  node-ipc:
+  wallet-db:

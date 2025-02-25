@@ -1,0 +1,40 @@
+version: "3.5"
+
+services:
+  postgres:
+    image: postgres:15.3
+    container_name: sidechains-postgres
+    environment:
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=cexplorer
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  cardano-db-sync:
+    image: ghcr.io/intersectmbo/cardano-db-sync:13.6.0.4
+    environment:
+      - NETWORK=${NETWORK:-mainnet}
+      - POSTGRES_HOST=${POSTGRES_HOST:-postgres}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_DB=${POSTGRES_DB:-cexplorer}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password123}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - db-sync-data:/var/lib/cexplorer
+      - node-ipc:/node-ipc
+
+volumes:
+  node-db:
+  node-ipc:
+  db-sync-data:
+  postgres-data:

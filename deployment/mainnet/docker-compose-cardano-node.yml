@@ -31,3 +31,4 @@ services:
 volumes:
   node-db:
   node-ipc:
+  snapshot:

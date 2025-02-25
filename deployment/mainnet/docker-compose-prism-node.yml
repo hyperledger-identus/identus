@@ -1,0 +1,48 @@
+version: "3.5"
+
+services:
+  prism-node-db:
+    image: postgres:15.3
+    container_name: prism-node-db
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: "node_db"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - prism-node-pg-data:/var/lib/postgresql/data
+      - ./postgres/init-script.sh:/docker-entrypoint-initdb.d/init-script.sh
+      - ./postgres/max_conns.sql:/docker-entrypoint-initdb.d/max_conns.sql
+    ports:
+      - "127.0.0.1:${PG_PORT:-5430}:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres", "-d", "node_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prism-node:
+    image: inputoutput/prism-node:2.5.0
+    environment:
+      NODE_PSQL_HOST: prism-node-db:5432
+      NODE_REFRESH_AND_SUBMIT_PERIOD:
+      NODE_MOVE_SCHEDULED_TO_PENDING_PERIOD:
+      NODE_WALLET_MAX_TPS:
+      NODE_STORAGE: filesystem
+      NODE_LEDGER: cardano
+      NODE_CARDANO_NETWORK: mainnet
+      NODE_CARDANO_WALLET_ID: ${CARDANO_WALLET_ID}
+      NODE_CARDANO_WALLET_PASSPHRASE: ${CARDANO_WALLET_PASSPHRASE}
+      NODE_CARDANO_PAYMENT_ADDRESS: ${CARDANO_PAYMENT_ADDRESS}
+      NODE_CARDANO_WALLET_API_HTTP_SCHEME: "http"
+      NODE_CARDANO_WALLET_API_HOST: "cardano-wallet"
+      NODE_CARDANO_WALLET_API_PORT: "8090"
+      NODE_CARDANO_DB_SYNC_HOST: postgres:5432
+      NODE_CARDANO_DB_SYNC_DATABASE: cexplorer
+      NODE_CARDANO_DB_SYNC_USERNAME: postgres
+      NODE_CARDANO_DB_SYNC_PASSWORD: password123
+    depends_on:
+      prism-node-db:
+        condition: service_healthy
+
+volumes:
+  prism-node-pg-data:
