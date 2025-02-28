@@ -19,6 +19,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "2"
 
   prism-node:
     image: inputoutput/prism-node:2.5.0
@@ -43,6 +48,11 @@ services:
     depends_on:
       prism-node-db:
         condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "2"
 
 volumes:
   prism-node-pg-data:

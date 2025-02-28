@@ -9,14 +9,8 @@ services:
     volumes:
       - ./mithril-entrypoint.sh:/app/bin/entrypoint.sh
       - node-db:/data
-    deploy:
-      resources:
-        limits:
-          cpus: "8"
-          memory: "8GB"
-        reservations:
-          cpus: "1"
-          memory: "2GB"
+
+
   cardano-node:
     image: ghcr.io/intersectmbo/cardano-node:10.1.4
     environment:
@@ -28,6 +22,11 @@ services:
     depends_on:
       init-node:
         condition: service_completed_successfully
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "2"
 volumes:
   node-db:
   node-ipc:

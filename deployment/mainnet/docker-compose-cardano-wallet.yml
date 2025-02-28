@@ -16,6 +16,11 @@ services:
       - wallet-db:/wallet-db
     ports:
       - "8090:8090"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "2"
 
 volumes:
   node-config:

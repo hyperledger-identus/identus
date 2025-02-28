@@ -16,6 +16,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "2"
 
   cardano-db-sync:
     image: ghcr.io/intersectmbo/cardano-db-sync:13.6.0.4
@@ -32,6 +37,11 @@ services:
     volumes:
       - db-sync-data:/var/lib/cexplorer
       - node-ipc:/node-ipc
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "2"
 
 volumes:
   node-db:
