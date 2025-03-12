@@ -8,7 +8,7 @@ As a contributor, here are the guidelines we would like you to follow:
  - [Feature Requests](#feature)
  - [Submission Guidelines](#submit)
  - [Coding Rules](#rules)
- - [Commit Message Guidelines](#commit)
+ - [Commit Message Guidelines](#commits)
  - [Guidelines for Closing Issues](#closing)
  - [Triage process and labels](#triage)
  - [Releasing Identus ecosystem](#releasing)
